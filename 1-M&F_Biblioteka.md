@@ -26,6 +26,8 @@
 * [PrintArray](#printarray-метод)
 * [CheckValueArray](#checkvaluearray-метод)
 * [SortSelection](#sortselection-метод)
+* [SortBubble](#sortbubble-сорт-пузырьком)
+* [SortQuick](#sortquick-быстрая)
 * [Частота значений](#частота-значений-метод)
 * [ToLower проверка](#tolower-проверка)
 ___
@@ -873,6 +875,85 @@ void SortSelection(int[] array)
     Console.WriteLine();
 }
 ```
+[оглавление](#оглавление)
+___
+### **SortBubble СОРТ ПУЗЫРЬКОМ**
+Сортировка путем сравнения 2х смежных значений в массиве и перестановке их при соблюдении условий (мин макс или макс мин).
+* Базовая
+```C#
+public static int[] SortBubble(this int[] collection)
+{
+int size = collection.Length;
+
+for (int current = 0; current < size - 1; current++)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (collection[i] > collection[i + 1])
+        {
+            int temp = collection[i];
+            collection[i] = collection[i + 1];
+            collection[i + 1] = temp;
+        }
+    }
+}
+return collection;
+}
+```
+* Оптимизированная
+```C#
+public static int[] SortBubbleOptimized(this int[] collection)
+{
+    int size = collection.Length;
+    for (int current = 0; current < size - 1; current++)
+    {
+    for (int i = 0; i < size - 1 - current; i++)
+    {
+        if (collection[i] > collection[i + 1])
+        {
+            int temp = collection[i];
+            collection[i] = collection[i + 1];
+            collection[i + 1] = temp;
+        }
+    }
+}
+return collection;
+}
+```
+
+[оглавление](#оглавление)
+___
+### **SortQuick БЫСТРАЯ**
+```C#
+public static class Sorting
+{
+  public static int[] SortQuick(this int[] collection, int left, int right)
+  {
+    int i = left;
+    int j = right;
+
+    int pivot = collection[Random.Shared.Next(left, right)];
+    while (i <= j)
+    {
+      while (collection[i] < pivot) i++;
+      while (collection[j] > pivot) j--;
+
+      if (i <= j)
+      {
+        int t = collection[i];
+        collection[i] = collection[j];
+        collection[j] = t;
+        i++;
+        j--;
+      }
+    }
+    if (i < right) SortQuick(collection, i, right);
+    if (left < j) SortQuick(collection, left, j);
+    return collection;
+  }
+}
+```
+
 [оглавление](#оглавление)
 ___
 ### **ЧАСТОТА ЗНАЧЕНИЙ МЕТОД**
